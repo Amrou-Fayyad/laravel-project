@@ -32,7 +32,11 @@ Route::get('/dashboard', function () {
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
-   Route::prefix('users')->group(function(){
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+});
+Route::prefix('users')->group(function(){
     Route::get('index',[UsersController::class,'index'])->name('users.index');
     Route::get('create',[UsersController::class,'create'])->name('users.create');
     Route::post('store',[UsersController::class,'store'])->name('users.store');
@@ -40,6 +44,7 @@ Route::middleware('auth')->group(function () {
     Route::put('update/{id}',[UsersController::class,'update'])->name('users.update');
     Route::get('delete/{id}',[UsersController::class,'delete'])->name('users.delete');
 });
+
 Route::prefix('categories')->group(function(){
     Route::get('index',[CategoriesController::class,'index'])->name('categories.index');
     Route::get('create',[CategoriesController::class,'create'])->name('categories.create');
@@ -48,6 +53,7 @@ Route::prefix('categories')->group(function(){
     Route::put('update/{id}',[CategoriesController::class,'update'])->name('categories.update');
     Route::get('delete/{id}',[CategoriesController::class,'delete'])->name('categories.delete');
 });
+
 Route::prefix('products')->group(function(){
     Route::get('index',[ProductsController::class,'index'])->name('products.index');
     Route::get('create',[ProductsController::class,'create'])->name('products.create');
@@ -56,6 +62,7 @@ Route::prefix('products')->group(function(){
     Route::put('update/{id}',[ProductsController::class,'update'])->name('products.update');
     Route::get('delete/{id}',[ProductsController::class,'delete'])->name('products.delete');
 });
+
 Route::prefix('orders')->group(function(){
     Route::get('index',[OrdersController::class,'index'])->name('orders.index');
     Route::get('create',[OrdersController::class,'create'])->name('orders.create');
@@ -64,6 +71,7 @@ Route::prefix('orders')->group(function(){
     Route::put('update/{id}',[OrdersController::class,'update'])->name('orders.update');
     Route::get('delete/{id}',[OrdersController::class,'delete'])->name('orders.delete');
 });
+
 Route::prefix('order_items')->group(function(){
     Route::get('index',[Order_itemsController::class,'index'])->name('order_items.index');
     Route::get('create',[Order_itemsController::class,'create'])->name('order_items.create');
@@ -72,6 +80,7 @@ Route::prefix('order_items')->group(function(){
     Route::put('update/{id}',[Order_itemsController::class,'update'])->name('order_items.update');
     Route::get('delete/{id}',[Order_itemsController::class,'delete'])->name('order_items.delete');
 });
+
 Route::prefix('addresses')->group(function(){
     Route::get('index',[AddressesController::class,'index'])->name('addresses.index');
     Route::get('create',[AddressesController::class,'create'])->name('addresses.create');
@@ -80,6 +89,7 @@ Route::prefix('addresses')->group(function(){
     Route::put('update/{id}',[AddressesController::class,'update'])->name('addresses.update');
     Route::get('delete/{id}',[AddressesController::class,'delete'])->name('addresses.delete');
 });
+
 Route::prefix('reviews')->group(function(){
     Route::get('index',[ReviewsController::class,'index'])->name('reviews.index');
     Route::get('create',[ReviewsController::class,'create'])->name('reviews.create');
@@ -88,10 +98,12 @@ Route::prefix('reviews')->group(function(){
     Route::put('update/{id}',[ReviewsController::class,'update'])->name('reviews.update');
     Route::get('delete/{id}',[ReviewsController::class,'delete'])->name('reviews.delete');
 });
+
 Route::prefix('carts')->group(function(){
     Route::get('index',[CartsController::class,'index'])->name('carts.index');
     Route::get('delete/{id}',[CartsController::class,'delete'])->name('carts.delete');
 });
+
 Route::prefix('cart_items')->group(function(){
     Route::get('index',[Cart_itemsController::class,'index'])->name('cart_items.index');
     Route::get('create',[Cart_itemsController::class,'create'])->name('cart_items.create');
@@ -100,6 +112,4 @@ Route::prefix('cart_items')->group(function(){
     Route::put('update/{id}',[Cart_itemsController::class,'update'])->name('cart_items.update');
     Route::get('delete/{id}',[Cart_itemsController::class,'delete'])->name('cart_items.delete');
 });
-});
-
 require __DIR__.'/auth.php';

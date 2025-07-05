@@ -14,7 +14,7 @@ class ProductsController extends Controller
          return view('products.index')->with('products',$products);
     }
      public function create(){
-    
+
       return view("products.create");
     }
     public function store(Request $request){
@@ -23,8 +23,8 @@ class ProductsController extends Controller
       $product->description = $request->description;
       $product->price = $request->filled('price') ? $request->price : rand(10, 500);
       $product->stock = $request->filled('stock') ? $request->stock : rand(1, 100);
-      $product->category_id = $request->filled('category_id') 
-        ? $request->category_id 
+      $product->category_id = $request->filled('category_id')
+        ? $request->category_id
         : Category::inRandomOrder()->value('id');
       $product->save();
 
@@ -34,7 +34,7 @@ class ProductsController extends Controller
       $product = Product::findOrFail($id);
       return view('products.edit')->with('product', $product);
     }
-   public function update(Request $request,$id){
+    public function update(Request $request,$id){
       $product = Product::findOrFail($id);
       $product->name = $request->name;
       $product->description = $request->description;
